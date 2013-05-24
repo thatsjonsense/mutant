@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+
+  "name": "Your Extension Here",
+  "description": "Powered by Mutant",
+  "version": "1.0",
+
+  "permissions": [],
+  "browser_action": {},
+  "content_scripts": [
+    {
+      "matches": ["*://*/images/search*"],
+      "css": [],
+      "js": [
+        "plugins/jquery.js",
+        "plugins/jquery-ui.js",
+        "plugins/underscore.js",
+        "plugins/less.js",
+        "plugins/purl.js",
+        "plugins/mutant.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [ // Don't forget to include these in mutant.js!
+  	"style.css",
+    "script.js"
+  ]
+
+}

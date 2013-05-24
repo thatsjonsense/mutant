@@ -1,0 +1,70 @@
+@linkblue: #3267d6;
+@lightgray: #e5e5e5;
+@overlap_opacity: .9;
+
+body {
+	#rr_cluster, #rr_coll {
+		a.itm {
+			background-color: transparent;
+		}
+
+		.it {
+			width: 245px;
+		}
+	}
+}
+
+body.cluster_underline {
+	#rr_cluster {
+		.it {
+			text-decoration: underline;
+		}
+	}	
+}
+
+body.cluster_tight {
+	#rr_cluster, #rr_coll {
+		.it {
+			padding: 4px;
+		}
+	}
+}
+
+body.cluster_white {
+
+	#rr_cluster, #rr_coll {
+		
+		.it, .ic {
+			background-color: white;
+			color: @linkblue;
+			padding-left: 0px;
+		}
+	}
+}
+
+body.cluster_gray {
+
+	#rr_cluster, #rr_coll {
+
+		.it, .ic {
+			background-color: @lightgray;
+			color: @linkblue;
+			padding-left: 0px;
+		}
+	}
+}
+
+// todo: fix this to work with more than 1 cluster!
+body.cluster_overlap {
+
+	#rr_cluster {
+
+		.it {
+			position: absolute;
+			top: 58px;
+			width: 300px;
+			opacity: @overlap_opacity;
+			padding-left: 9px;
+		}
+	}
+}
