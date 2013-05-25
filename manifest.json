@@ -9,7 +9,7 @@
   "browser_action": {},
   "content_scripts": [
     {
-      "matches": ["*://*/images/search*"],
+      "matches": ["<all_urls>"],
       "css": [],
       "js": [
         "plugins/jquery.js",
@@ -17,13 +17,16 @@
         "plugins/underscore.js",
         "plugins/less.js",
         "plugins/purl.js",
+        "rules.json",
         "plugins/mutant.js"
       ]
     }
   ],
-  "web_accessible_resources": [ // Don't forget to include these in mutant.js!
-  	"style.css",
-    "script.js"
+  "web_accessible_resources": [ // Don't forget to include these in rules.json!
+  	"example/style.css",
+    "example/script.js",
+    "nyt/style.css",
+    "nyt/script.js"
   ]
 
 }

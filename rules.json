@@ -1,0 +1,4 @@
+RULES = {
+	"bing.com/images/search": ["example/script.js","example/style.css"],
+	"nytimes.com": ["nyt/script.js","nyt/style.css"]
+}

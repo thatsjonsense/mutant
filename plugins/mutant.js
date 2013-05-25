@@ -1,8 +1,12 @@
-// Add more files here. Don't forget to include them in manifest.json!
+// Debugging
 
-CSS_FILES = ['style.css']
-JS_FILES = ['script.js']
-DEBUG = false
+DEBUG = true
+
+function log(message) {
+	if(DEBUG) {
+		console.log(message)
+	}
+}
 
 // Get URL parameters
 
@@ -11,8 +15,37 @@ URL.raw = $.url().attr('source')
 URL.domain = $.url().attr('host')
 URL.anchor = $.url().attr('fragment')
 
-// Reload CSS
 
+// Step through each rule in rules.json, adding the JS/CSS files that apply
+
+CSS_FILES = []
+JS_FILES = []
+
+_.each(RULES,function(files,rule){
+	var re = new RegExp(rule)
+	if (re.test(URL.raw)) {
+		log('URL ' + URL.raw + ' matched on rule ' + rule)
+		
+		JS_FILES = _.union(
+			_.filter(files, function(file) {return /.js$/.test(file)}),
+			_.filter(files, function(file) {return /.json$/.test(file)}),
+			JS_FILES
+		)
+
+		CSS_FILES = _.union(
+			_.filter(files, function(file) {return /.css$/.test(file)}),
+			_.filter(files, function(file) {return /.less$/.test(file)}),
+			CSS_FILES
+		)
+
+
+	} else {
+		log('URL ' + URL.raw + ' did not match on rule ' + rule)
+	}
+})
+
+
+// Load CSS files via LESS
 _.each(CSS_FILES,function(filename){
 
 	var tag = document.createElement('link');
@@ -21,21 +54,19 @@ _.each(CSS_FILES,function(filename){
 	tag.href = chrome.extension.getURL(filename);
 	less.sheets.push(tag);
 	less.refresh();
-	if(DEBUG) {console.log('Loaded ' + filename)}
+	log('Loaded ' + filename)
 })
 
-// Reload scripts
+// Load Javascript and JSON files
 
 _.each(JS_FILES,function(filename){
 
+	// todo: make this synchronous
 	var src = chrome.extension.getURL(filename) + '?' + Math.random() //bypass cache
 	$.get(src,function(file){
 		eval(file)
 	})
 
-	if(DEBUG) {console.log('Loaded ' + filename)}
+	log('Loaded ' + filename)
 
 })
-	
-// Don't add code below this point!
-// --------------------------------
