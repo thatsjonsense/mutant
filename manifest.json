@@ -6,11 +6,7 @@
   "version": "1.0",
 
   "permissions": [],
-  "browser_action": {
-    "default_title": "Sidekick",
-    "default_icon": "sidekick/chemistry.png",
-    "default_popup": "sidekick/popup.html"
-    },
+  "browser_action": {},
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
@@ -30,9 +26,7 @@
   	"example/style.css",
     "example/script.js",
     "nyt/style.css",
-    "nyt/script.js",
-    "sidekick/popup.css",
-    "sidekick/popup.js"
+    "nyt/script.js"
   ]
 
 }
