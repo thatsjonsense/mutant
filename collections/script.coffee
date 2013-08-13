@@ -1,3 +1,6 @@
+# Resources
+###########
+
 # source: http://metro.windowswiki.info/mi/
 # album: http://imgur.com/a/OFE2N
 
@@ -7,38 +10,11 @@ icons =
 	fav: 'http://i.imgur.com/2Ku4QsV.png'
 	favadd: 'http://i.imgur.com/GgqxQti.png'
 
-$('.dg_u').prepend("<div class='tags'></div>")
-$('.tags').html("<div class='add'><img src='#{icons.favadd}'></div>")
 
-$('.tags .add').click ->
-	
-	# Toggle
-	tags = $(@).closest('.tags')
-	query = URL.q
-	image = $(@).closest('.dg_u').find('a').attr('ihk')
+query = URL.q
 
-	
-	if tags.find('.tag').length
-		log "Removing result #{image} for query #{query}"
-		Storage.removeTag(query,image,'saved')
-		tags.find('.tag').remove()
-		tags.find('.add img').attr('src',icons.favadd)
-	else
-		log "Saving result #{image} for query #{query}"
-		Storage.addTag(query,image,'saved')
-		tags.prepend("<div class='tag'><img src='#{icons.fav}'</div>")
-		tags.find('.add img').attr('src',icons.x)
-
-
-	
-
-$('.dg_u').mouseenter ->
-	$(@).find('.tags .add').fadeIn(100)
-
-$('.dg_u').mouseleave ->
-	$(@).find('.tags .add').fadeOut(100)
-
-
+# Reading/writing to localStorage
+#################################
 
 if not store.get("biSave")?
 	store.set("biSave",{})
@@ -75,5 +51,79 @@ class Storage
 
 	@set: (key,value) ->
 		store.set("#{@namespace}_#{key}",value)
+
+# Rendering tags
+################
+showTagged = (div_image) ->
+	log div_image
+	div_tags = div_image.find('.tags')
+	log div_tags
+	div_tags.prepend("<div class='tag'><img src='#{icons.fav}'</div>")
+	div_tags.find('.add img').attr('src',icons.x)
+	div_image.addClass('saved')
+
+showUntagged = (div_image) ->
+	div_tags = div_image.find('.tags')
+	div_tags.find('.tag').remove()
+	div_tags.find('.add img').attr('src',icons.favadd)
+	div_image.removeClass('saved')
+
+
+# Support tagging stuff
+#######################
+makeTaggable = (images) ->
+	images.prepend("<div class='tags'></div>")
+	images.find('.tags').html("<div class='add'><img src='#{icons.favadd}'></div>")
+
+	images.mouseenter ->
+		$(@).find('.tags .add').fadeIn(100)
+
+	images.mouseleave ->
+		$(@).find('.tags .add').fadeOut(100)
+
+	images.find('.tags .add').click ->
+		
+		div_tags = $(@).closest('.tags')
+		div_image = $(@).closest('.dg_u')
+		image_id = div_image.find('a').attr('ihk')
+
+		# Toggle	
+		if div_tags.find('.tag').length
+			log "Removing result #{image_id} for query #{query}"
+			Storage.removeTag(query,image_id,'saved')
+			showUntagged(div_image)
+		else
+			log "Saving result #{image_id} for query #{query}"
+			Storage.addTag(query,image_id,'saved')
+			showTagged(div_image)
+
+
+
+# Load saved stuff
+##################
+loadTags = (images) ->
+	tagged_items = Storage.getTags(query)
+
+	for image_id, tags of tagged_items when tags.length
+		dgu = images.has("a[ihk='#{image_id}']")
+		if dgu
+			showTagged(dgu)
+
+
+# Add handlers every time we load in more images
+#################
+setup = ->
+	untaggable = $('.dg_u').not('.taggable')
+	makeTaggable(untaggable)
+	loadTags(untaggable)
+	untaggable.addClass('taggable')
+
+
+setup()
+$(window).scroll -> setup()
+
+
+
+
 
 
