@@ -54,19 +54,38 @@ class Storage
 
 # Rendering tags
 ################
-showTagged = (div_image) ->
-	log div_image
+showTagged = (image_id) ->
+	div_image = findImageDivs(image_id).not('.saved')
+
 	div_tags = div_image.find('.tags')
-	log div_tags
+	
 	div_tags.prepend("<div class='tag'><img src='#{icons.fav}'</div>")
 	div_tags.find('.add img').attr('src',icons.x)
 	div_image.addClass('saved')
 
-showUntagged = (div_image) ->
+	img = div_image.clone(true)
+	$('.cart').append(img)
+	img.mouseleave()
+	
+
+
+
+
+showUntagged = (image_id) ->
+	div_image = findImageDivs(image_id)
 	div_tags = div_image.find('.tags')
 	div_tags.find('.tag').remove()
 	div_tags.find('.add img').attr('src',icons.favadd)
 	div_image.removeClass('saved')
+
+	$('.cart').find(div_image).remove()
+
+
+
+# Cart
+######################
+createCart = ->
+	$('body').append("<div class='cart'><h1>Saved images</h1></div>")
 
 
 # Support tagging stuff
@@ -91,32 +110,43 @@ makeTaggable = (images) ->
 		if div_tags.find('.tag').length
 			log "Removing result #{image_id} for query #{query}"
 			Storage.removeTag(query,image_id,'saved')
-			showUntagged(div_image)
+			showUntagged(image_id)
 		else
 			log "Saving result #{image_id} for query #{query}"
 			Storage.addTag(query,image_id,'saved')
-			showTagged(div_image)
+			showTagged(image_id)
 
 
 
 # Load saved stuff
 ##################
+findImageDivs = (image_id) ->
+	$('.dg_u').has("a[ihk='#{image_id}']")
+
+
 loadTags = (images) ->
 	tagged_items = Storage.getTags(query)
 
 	for image_id, tags of tagged_items when tags.length
-		dgu = images.has("a[ihk='#{image_id}']")
-		if dgu
-			showTagged(dgu)
+		showTagged(image_id,images)
 
 
 # Add handlers every time we load in more images
 #################
 setup = ->
 	untaggable = $('.dg_u').not('.taggable')
-	makeTaggable(untaggable)
-	loadTags(untaggable)
+
 	untaggable.addClass('taggable')
+
+	makeTaggable(untaggable)
+
+	loadTags(untaggable)
+
+
+
+
+
+createCart()
 
 
 setup()

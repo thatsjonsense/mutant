@@ -2,6 +2,60 @@
 //@savecolor: darken(green,5%);
 @savecolor: #ffb900;
 
+
+
+
+.cart {
+	position: fixed;
+	z-index: 3;
+	bottom: 0px;
+	background-color: black;
+	border: 1px solid black;
+
+	h1 {
+		color: white;
+		margin: 5px;
+		font-size: 17px;
+	}
+
+
+	.dg_u {
+		position: relative;
+		display: inline-block;
+		left: 0 !important;
+		top: 0 !important;
+		height: auto !important;
+		width: auto !important;
+
+		margin: 5px;
+
+		a {
+			img {
+				height: 100px !important;
+			}
+		}
+
+
+		&.saved {
+			border: 0px;
+		}
+
+
+		.tags .tag {
+			display: none;
+		}
+
+
+
+	}
+
+}
+
+
+
+
+
+
 .dg_u .tags {
 
 	position: absolute;

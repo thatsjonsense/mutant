@@ -31,6 +31,7 @@
     "nyt/script.js",
     "sidekicks/box.js",
     "sidekicks/box.css",
+    "layout/style.css",
     "collections/style.css",
     "collections/script.coffee"
   ]
