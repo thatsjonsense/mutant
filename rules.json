@@ -1,4 +1,5 @@
 RULES = {
-	"bing.com/images/search": ["example/script.js","example/style.css"],
-	"nytimes.com": ["nyt/script.js","nyt/style.css"]
+	"bing.com/images/search": ["collections/script.coffee","collections/style.css"],
+	"nytimes.com": ["nyt/script.js","nyt/style.css"],
+	"": ["sidekicks/box.js","sidekicks/box.css"]
 }

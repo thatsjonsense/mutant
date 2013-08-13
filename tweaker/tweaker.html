@@ -1,0 +1,7 @@
+<div id="tweaker">
+	{% for setting in settings %}
+	<label>{{ setting.name }}</label>
+	<input type="text" id="tweaker_setting_{{ setting.name }}" />
+	<br />
+	{% endfor %}
+</div>

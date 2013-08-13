@@ -1,0 +1,70 @@
+@linkblue: #3267d6;
+
+
+.dg_u .tags {
+
+	position: absolute;
+	z-index: 2;
+	right: 0px;	
+	top: 0px;
+
+	color: white;
+	font-weight: bold;
+	font-size: 18px;
+
+	background-color: fadeout(black,30%);
+
+
+	div {
+		padding: 5px;
+
+
+		&.add {
+			display: none;
+		}
+
+		&.tag {
+			background-color: fadeout(green,30%);
+		}
+
+
+		img {
+			margin: -10px;
+		}
+
+	}
+
+}
+
+
+
+
+/*
+
+.dg_u {
+	//border: 3px solid @linkblue;
+	box-sizing: border-box;
+}
+
+
+
+.dg_u a:hover:before {
+	//content: url('http://i.imgur.com/oLpKCuM.png');
+
+	position: absolute;
+	z-index: 2;
+	right: 0px;
+
+	
+	content: '+';
+
+	color: white;
+	font-weight: bold;
+	font-size: 20px;
+
+	background-color: fadeout(black,50%);
+	text-align: center;
+	//height: 20px;
+	width: 20px;
+}
+*/

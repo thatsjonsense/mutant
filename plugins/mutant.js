@@ -20,6 +20,7 @@ URL.anchor = $.url().attr('fragment')
 
 CSS_FILES = []
 JS_FILES = []
+COFFEE_FILES = []
 
 _.each(RULES,function(files,rule){
 	var re = new RegExp(rule)
@@ -36,6 +37,11 @@ _.each(RULES,function(files,rule){
 			_.filter(files, function(file) {return /.css$/.test(file)}),
 			_.filter(files, function(file) {return /.less$/.test(file)}),
 			CSS_FILES
+		)
+
+		COFFEE_FILES = _.union(
+			_.filter(files, function(file) {return /.coffee$/.test(file)}),
+			COFFEE_FILES
 		)
 
 
@@ -56,6 +62,24 @@ _.each(CSS_FILES,function(filename){
 	less.refresh();
 	log('Loaded ' + filename)
 })
+
+_.each(COFFEE_FILES,function(filename) {
+	/*
+	var tag = document.createElement('script')
+	tag.type = 'text/coffeescript'
+	tag.src = chrome.extension.getURL(filename)
+	$('head').append(tag)
+	*/
+	var src = chrome.extension.getURL(filename) + '?' + Math.random() //bypass cache
+	$.get(src,function(file){
+		CoffeeScript.eval(file)
+	})
+	log('Loaded ' + filename)
+
+})
+
+
+//JS_FILES.push('plugins/coffee-script.js')
 
 // Load Javascript and JSON files
 

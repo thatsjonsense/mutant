@@ -1,0 +1,31 @@
+@color_div: black;
+@color_span: #00ff00;
+@color_p: #0000ff;
+@decay: 30%;
+
+body.sidekicks_box {
+
+
+	div {
+		outline-width: 1px;
+		outline-color: @color_div;
+		outline-style: dashed;
+	}
+
+	div div { outline-color: fadeout(@color_div, @decay * 1); }
+	div div div { outline-color: fadeout(@color_div, @decay * 2); }
+	div div div div { outline-color: fadeout(@color_div, @decay * 3); }
+
+}
+
+body.sidekicks_xray {
+	* {
+		color: black !important;
+		background-color: white !important;
+		background-image: none !important;
+	}
+
+	img {
+		opacity: 0.25;
+	}
+}
